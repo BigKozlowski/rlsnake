@@ -6,3 +6,4 @@ cmake_*
 raylibsnake
 Makefile
 .vscode/
+*.DS_Store
