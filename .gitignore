@@ -1,0 +1,7 @@
+_deps/
+CMakeFiles/
+CMakeCache.txt
+CPack*
+cmake_*
+raylibsnake
+Makefile
