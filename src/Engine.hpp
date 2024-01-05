@@ -1,7 +1,5 @@
 #pragma once
 #include "main.hpp"
-#pragma GCC system_header
-#include <raylib.h>
 
 class Snake;
 

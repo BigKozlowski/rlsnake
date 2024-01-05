@@ -8,7 +8,7 @@ struct point
   int16_t y;
 };
 
+#include "utils/screen.hpp"
 #include "Apple.hpp"
 #include "Snake.hpp"
 #include "Engine.hpp"
-#include "utils/screen.hpp"

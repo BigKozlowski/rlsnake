@@ -1,6 +1,5 @@
 #pragma once
 #include "main.hpp"
-#include <raylib.h>
 
 class Apple;
 
@@ -24,5 +23,4 @@ public:
     bool hasToEatApple(Apple *apple);
     bool isSelfCollided();
     void eat(Apple *apple);
-    void respawn();
 };
