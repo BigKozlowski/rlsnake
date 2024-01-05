@@ -30,16 +30,30 @@ void Snake::respawn()
     this->length = 0;
 }
 
-void Snake::draw(Texture2D texture)
+void Snake::draw(Texture2D texture, Texture2D headTexture)
 {
-    for (size_t i = 0; i < this->length; ++i)
+    auto previousPoint = this->body[0];
+    for (size_t i = 1; i < this->length; ++i)
     {
-
-        DrawTexture(texture, this->body[i].x * 16, this->body[i].y * 16, WHITE);
+        if(this->body[i].x == previousPoint.x){
+            DrawTextureEx(texture, Vector2{(float)this->body[i].x * 16, (float)this->body[i].y * 16 + 16}, 270.0, 1.0, WHITE);
+        } else {
+            DrawTexture(texture, this->body[i].x * 16, this->body[i].y * 16, WHITE);
+        }
+        previousPoint = this->body[i];
         // DrawRectangle(this->body[i].x * 16, this->body[i].y * 16, 16, 16, GRAY);
     }
 
-    DrawRectangle(this->body[0].x * 16, this->body[0].y * 16, 16, 16, RED);
+    if(this->direction.x == 1) {
+        DrawTextureEx(headTexture, Vector2{(float)this->body[0].x * 16 + 16, (float)this->body[0].y * 16 + 16}, 180.0, 1.0, WHITE);
+    } else if (this->direction.x == -1) {
+        DrawTextureEx(headTexture, Vector2{(float)this->body[0].x * 16, (float)this->body[0].y * 16}, 0.0, 1.0, WHITE);
+    } else if (this->direction.y == 1) {
+        DrawTextureEx(headTexture, Vector2{(float)this->body[0].x * 16, (float)this->body[0].y * 16 + 16}, 270.0, 1.0, WHITE);
+    } else {
+        DrawTextureEx(headTexture, Vector2{(float)this->body[0].x * 16 + 16, (float)this->body[0].y * 16}, 90.0, 1.0, WHITE);
+    }
+    // DrawRectangle(this->body[0].x * 16, this->body[0].y * 16, 16, 16, RED);
 }
 
 void Snake::setDirection(struct point p)

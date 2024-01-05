@@ -89,18 +89,27 @@ void Engine::render()
       const auto texture = LoadTextureFromImage(image);
       const auto snakeImage = LoadImage("./src/snake.png");
       const auto snakeTexture = LoadTextureFromImage(snakeImage);
+      const auto mudImage = LoadImage("./src/mud.png");
+      const auto mudTexture = LoadTextureFromImage(mudImage);
+      const auto headImage = LoadImage("./src/snake_head.png");
+      const auto headTexture = LoadTextureFromImage(headImage);
       BeginDrawing();
+      DrawTextureQuad(mudTexture, Vector2{50, 30}, Vector2{0, 0}, Rectangle{0, 0, 800, 480}, WHITE);
       ClearBackground(BLACK);
       if (isOnScreen(apple->getPosition()))
       {
         apple->draw(texture);
       }
-      snake->draw(snakeTexture);
+      snake->draw(snakeTexture, headTexture);
       EndDrawing();
       UnloadTexture(texture);
       UnloadImage(image);
       UnloadTexture(snakeTexture);
       UnloadImage(snakeImage);
+      UnloadTexture(mudTexture);
+      UnloadImage(mudImage);
+      UnloadTexture(headTexture);
+      UnloadTexture(headTexture);
     }
     break;
   default:
