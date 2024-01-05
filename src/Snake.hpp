@@ -6,7 +6,7 @@ class Apple;
 class Snake
 {
 private:
-    struct point *body;
+    struct point *body{};
     struct point direction;
     uint16_t length;
 
@@ -16,8 +16,12 @@ public:
     void grow(struct point p);
     void draw();
     void setDirection(struct point p);
-    void update(Apple *apple);
+    void update();
     void changeDirection(struct point p);
     struct point getHead();
     struct point getTail();
+    bool hasToEatApple(Apple *apple);
+    bool isSelfCollided();
+    void eat(Apple *apple);
+    void respawn();
 };

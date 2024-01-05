@@ -16,6 +16,7 @@ int main()
 
     while (!WindowShouldClose())
     {
+        engine->handleKeypress();
         engine->update();
         engine->render();
     }

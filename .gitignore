@@ -5,3 +5,4 @@ CPack*
 cmake_*
 raylibsnake
 Makefile
+.vscode/

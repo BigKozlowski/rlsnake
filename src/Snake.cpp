@@ -6,24 +6,29 @@
 
 Snake::Snake(struct point head, struct point direction)
 {
-    this->length = 1;
+    this->length = 0;
     this->grow(head);
     this->direction = direction;
 }
 
 Snake::~Snake()
 {
-    delete this->body;
+    std::free(this->body);
 }
 
 void Snake::grow(struct point p)
 {
-    struct point *a = (point *)std::realloc(this->body, sizeof *body * (this->length + 1));
+    struct point *a = (point *)std::realloc(this->body, sizeof(*this->body) * (this->length + 1));
     if (a)
     {
         this->body = a;
         this->body[this->length++] = p;
     }
+}
+
+void Snake::respawn()
+{
+    this->length = 0;
 }
 
 void Snake::draw()
@@ -41,7 +46,7 @@ void Snake::setDirection(struct point p)
     this->direction = p;
 }
 
-void Snake::update(Apple *apple)
+void Snake::update()
 {
     for (int i = (this->length) - 1; i > 0; i--)
     {
@@ -59,13 +64,29 @@ void Snake::update(Apple *apple)
     {
         this->body[0].y = 29;
     }
+}
 
+bool Snake::isSelfCollided() {
+    struct point head = this->body[0];
+    for(int i = 1; i < this->length; i++) {
+        if(this->body[i].x == head.x && this->body[i].y == head.y) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Snake::hasToEatApple(Apple *apple) {
     if (this->body[0].x == apple->x && this->body[0].y == apple->y)
     {
-        this->grow(apple->getPosition());
-        std::cout << "EATEN" << std::endl;
-        apple->remove();
+        return true;
     }
+    return false;
+}
+
+void Snake::eat(Apple *apple) {
+    this->grow(apple->getPosition());
+    apple->remove();
 }
 
 void Snake::changeDirection(struct point p)

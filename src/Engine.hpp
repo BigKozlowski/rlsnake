@@ -10,12 +10,14 @@ private:
   uint32_t frameCount;
   Apple *apple;
   int lastPressed;
-  void handleKeypress();
+  void initializeSnake();
   /* data */
 public:
   Engine(/* args */);
   ~Engine();
+  void handleKeypress();
   void init();
   void update();
   void render();
+  bool gameRunning;
 };
