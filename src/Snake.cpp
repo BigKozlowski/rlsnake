@@ -1,6 +1,5 @@
 #include "Snake.hpp"
 #include <cstdlib>
-#include <raylib.h>
 #include <iostream>
 #include <format>
 
@@ -31,11 +30,13 @@ void Snake::respawn()
     this->length = 0;
 }
 
-void Snake::draw()
+void Snake::draw(Texture2D texture)
 {
     for (size_t i = 0; i < this->length; ++i)
     {
-        DrawRectangle(this->body[i].x * 16, this->body[i].y * 16, 16, 16, GRAY);
+
+        DrawTexture(texture, this->body[i].x * 16, this->body[i].y * 16, WHITE);
+        // DrawRectangle(this->body[i].x * 16, this->body[i].y * 16, 16, 16, GRAY);
     }
 
     DrawRectangle(this->body[0].x * 16, this->body[0].y * 16, 16, 16, RED);

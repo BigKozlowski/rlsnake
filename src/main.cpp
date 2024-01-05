@@ -1,5 +1,4 @@
 #include "main.hpp"
-#include "raylib.h"
 #include <iostream>
 
 #define SCREEN_WIDTH (800)

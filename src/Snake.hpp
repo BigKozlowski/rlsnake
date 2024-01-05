@@ -1,5 +1,6 @@
 #pragma once
 #include "main.hpp"
+#include <raylib.h>
 
 class Apple;
 
@@ -14,7 +15,7 @@ public:
     Snake(struct point head, struct point direction);
     ~Snake();
     void grow(struct point p);
-    void draw();
+    void draw(Texture2D texture);
     void setDirection(struct point p);
     void update();
     void changeDirection(struct point p);

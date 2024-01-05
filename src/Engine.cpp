@@ -1,6 +1,5 @@
 #include "Engine.hpp"
 #include <stdlib.h>
-#include "raylib.h"
 #include <iostream>
 
 void Engine::initializeSnake() {
@@ -13,7 +12,7 @@ void Engine::initializeSnake() {
 Engine::Engine()
 {
   this->initializeSnake();
-  this->apple = new Apple({-1, -1});
+  this->apple = new Apple({-1, -1}, "./src/apple.png");
   this->gameRunning = true;
 }
 
@@ -21,7 +20,7 @@ void Engine::init() {
   delete this->snake;
   this->initializeSnake();
   delete this->apple;
-  this->apple = new Apple({-1, -1});
+  this->apple = new Apple({-1, -1}, "./apple.png");
   this->gameRunning = true;
 }
 
@@ -36,7 +35,7 @@ void Engine::update()
   if (!isOnScreen(apple->getPosition()))
   {
     delete apple;
-    apple = new Apple((struct point){(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
+    apple = new Apple((struct point){(int16_t)(rand() % 50), (int16_t)(rand() % 30)}, "./apple.png");
   }
   frameCount++;
   if (frameCount % 10 == 0)
@@ -86,14 +85,22 @@ void Engine::render()
   {
   case true:
     {
+      const auto image = LoadImage("./src/apple.png");
+      const auto texture = LoadTextureFromImage(image);
+      const auto snakeImage = LoadImage("./src/snake.png");
+      const auto snakeTexture = LoadTextureFromImage(snakeImage);
       BeginDrawing();
       ClearBackground(BLACK);
       if (isOnScreen(apple->getPosition()))
       {
-        DrawRectangle(apple->x * 16, apple->y * 16, 16, 16, GREEN);
+        apple->draw(texture);
       }
-      snake->draw();
+      snake->draw(snakeTexture);
       EndDrawing();
+      UnloadTexture(texture);
+      UnloadImage(image);
+      UnloadTexture(snakeTexture);
+      UnloadImage(snakeImage);
     }
     break;
   default:
