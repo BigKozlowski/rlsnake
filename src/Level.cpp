@@ -5,8 +5,8 @@
 Level::Level(char *filePath)
 {
     if(FileExists(filePath)){
-        int levelSize = 1530;
-        auto contents = LoadFileData(filePath, &levelSize);
+        int levelSize = 1500;
+        unsigned char *contents = LoadFileData(filePath, &levelSize);
         
         for(int y = 0; y < 30; y++) {
             for(int x = 0; x < 50; x++) {
@@ -14,6 +14,7 @@ Level::Level(char *filePath)
                 this->walls[x][y] = contents[x + (y * 50)] == '0' ? false : true;
             }
         }
+        UnloadFileData(contents);
     }
 }
 

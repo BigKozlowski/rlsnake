@@ -70,7 +70,7 @@ void Engine::update()
   {
     delete apple;
     apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
-    if(this->level->walls[this->apple->getPosition().x][this->apple->getPosition().y]) {
+    while(this->level->walls[this->apple->getPosition().x][this->apple->getPosition().y]){
       delete apple;
       apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
     }
