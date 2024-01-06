@@ -1,7 +1,8 @@
 #include "Snake.hpp"
 #include <cstdlib>
+#include <iostream>
 
-Snake::Snake(struct point head, struct point direction)
+Snake::Snake(point head, point direction)
 {
     this->length = 0;
     this->grow(head);
@@ -13,9 +14,9 @@ Snake::~Snake()
     std::free(this->body);
 }
 
-void Snake::grow(struct point p)
+void Snake::grow(point p)
 {
-    struct point *a = (point *)std::realloc(this->body, sizeof(*this->body) * (this->length + 1));
+    point *a = (point *)std::realloc(this->body, sizeof(*this->body) * (this->length + 1));
     if (a)
     {
         this->body = a;
@@ -40,7 +41,7 @@ void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTextur
     this->drawHead(headTexture);
 }
 
-void Snake::drawBodyPart(Texture2D texture, Texture2D angleTexture, struct point prev, struct point curr, struct point next) {
+void Snake::drawBodyPart(Texture2D texture, Texture2D angleTexture, point prev, point curr, point next) {
     if(prev.x == next.x) {
         DrawTextureEx(texture, Vector2{(float)curr.x * 16, (float)curr.y * 16 + 16}, 270.0, 1.0, WHITE);
     } else if (prev.y == next.y) {
@@ -50,7 +51,7 @@ void Snake::drawBodyPart(Texture2D texture, Texture2D angleTexture, struct point
     }
 }
 
-void Snake::drawTail(Texture2D texture, struct point prev, struct point curr) {
+void Snake::drawTail(Texture2D texture, point prev, point curr) {
     if (curr.x == prev.x)
     {
         DrawTextureEx(texture, Vector2{(float)curr.x * 16, (float)curr.y * 16 + 16}, 270.0, 1.0, WHITE);
@@ -61,21 +62,38 @@ void Snake::drawTail(Texture2D texture, struct point prev, struct point curr) {
     }
 }
 
-void Snake::drawSnakeAngle(Texture2D angleTexture, struct point prev, struct point curr, struct point next) {
+void Snake::drawSnakeAngle(Texture2D angleTexture, point prev, point curr, point next) {
     if(curr.x - prev.x > 1) {
-        this->drawSnakeAngle(angleTexture, (struct point){curr.x + 1, prev.y}, curr, next);
+        this->drawSnakeAngle(angleTexture, (point){curr.x + 1, prev.y}, curr, next);
         return;
     }
     if(curr.x - prev.x < -1) {
-        this->drawSnakeAngle(angleTexture, (struct point){curr.x - 1, prev.y}, curr, next);
+        this->drawSnakeAngle(angleTexture, (point){curr.x - 1, prev.y}, curr, next);
         return;
     }
     if(curr.y - prev.y > 1) {
-        this->drawSnakeAngle(angleTexture, (struct point){prev.x, curr.y + 1}, curr, next);
+        this->drawSnakeAngle(angleTexture, (point){prev.x, curr.y + 1}, curr, next);
         return;
     }
     if(curr.y - prev.y < -1) {
-        this->drawSnakeAngle(angleTexture, (struct point){prev.x, curr.y - 1}, curr, next);
+        this->drawSnakeAngle(angleTexture, (point){prev.x, curr.y - 1}, curr, next);
+        return;
+    }
+
+    if(curr.x - next.x > 1) {
+        this->drawSnakeAngle(angleTexture, prev, curr, (point){curr.x + 1, next.y});
+        return;
+    }
+    if(curr.x - next.x < -1) {
+        this->drawSnakeAngle(angleTexture, prev, curr, (point){curr.x - 1, next.y});
+        return;
+    }
+    if(curr.y - next.y > 1) {
+        this->drawSnakeAngle(angleTexture, prev, curr, (point){next.x, curr.y + 1});
+        return;
+    }
+    if(curr.y - next.y < -1) {
+        this->drawSnakeAngle(angleTexture, prev, curr, (point){next.x, curr.y - 1});
         return;
     }
 
@@ -121,7 +139,7 @@ void Snake::drawHead(Texture2D headTexture) {
     }
 }
 
-void Snake::setDirection(struct point p)
+void Snake::setDirection(point p)
 {
     this->direction = p;
 }
@@ -148,7 +166,7 @@ void Snake::update()
 
 bool Snake::isSelfCollided()
 {
-    struct point head = this->body[0];
+    point head = this->body[0];
     for (int i = 1; i < this->length; i++)
     {
         if (this->body[i].x == head.x && this->body[i].y == head.y)
@@ -174,30 +192,30 @@ void Snake::eat(Apple *apple)
     apple->remove();
 }
 
-void Snake::changeDirection(struct point p)
+void Snake::changeDirection(point p)
 {
     if (p.y != 0)
     {
         if (this->direction.y == 0)
         {
-            this->direction = (struct point){0, p.y};
+            this->direction = point{0, p.y};
         }
     }
     else if (p.x != 0)
     {
         if (this->direction.x == 0)
         {
-            this->direction = (struct point){p.x, 0};
+            this->direction = point{p.x, 0};
         }
     }
 }
 
-struct point Snake::getHead()
+point Snake::getHead()
 {
     return this->body[0];
 }
 
-struct point Snake::getTail()
+point Snake::getTail()
 {
     return this->body[this->length - 1];
 }

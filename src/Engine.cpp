@@ -16,13 +16,12 @@ Engine::Engine()
   this->apple = new Apple({-1, -1});
   this->gameRunning = true;
 
-  this->appleImage = LoadImage("./src/apple.png");
-  this->snakeImage = LoadImage("./src/snake.png");
-  this->mudImage = LoadImage("./src/mud.png");
-  this->headImage = LoadImage("./src/snake_head.png");
-  this->angleImage = LoadImage("./src/snake_angle.png");
+  this->appleImage = LoadImage("./assets/apple.png");
+  this->snakeImage = LoadImage("./assets/snake_thin.png");
+  this->mudImage = LoadImage("./assets/mud.png");
+  this->headImage = LoadImage("./assets/snake_head.png");
+  this->angleImage = LoadImage("./assets/snake_angle_thin.png");
   this->appleTexture = LoadTextureFromImage(this->appleImage);
-  std::cout << "construct" << std::endl;
   this->snakeBodyTexture = LoadTextureFromImage(this->snakeImage);
   this->mudTexture = LoadTextureFromImage(mudImage);
   this->snakeHeadTexture = LoadTextureFromImage(headImage);
@@ -38,10 +37,10 @@ Engine::~Engine()
   UnloadTexture(this->snakeHeadTexture);
   UnloadTexture(this->snakeAngleTexture);
   UnloadImage(this->appleImage);
-  // UnloadImage(snakeImage);
-  // UnloadImage(mudImage);
-  // UnloadImage(headImage);
-  // UnloadImage(angleImage);
+  UnloadImage(snakeImage);
+  UnloadImage(mudImage);
+  UnloadImage(headImage);
+  UnloadImage(angleImage);
 }
 
 void Engine::init()
@@ -60,7 +59,7 @@ void Engine::update()
   if (!isOnScreen(apple->getPosition()))
   {
     delete apple;
-    apple = new Apple((struct point){(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
+    apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
   }
   frameCount++;
   if (frameCount % 10 == 0)
@@ -85,19 +84,19 @@ void Engine::handleKeypress()
   {
     if (lastPressed == (KEY_DOWN))
     {
-      snake->changeDirection((struct point){0, 1});
+      snake->changeDirection(point{0, 1});
     }
     if (lastPressed == (KEY_UP))
     {
-      snake->changeDirection((struct point){0, -1});
+      snake->changeDirection(point{0, -1});
     }
     if (lastPressed == (KEY_LEFT))
     {
-      snake->changeDirection((struct point){-1, 0});
+      snake->changeDirection(point{-1, 0});
     }
     if (lastPressed == (KEY_RIGHT))
     {
-      snake->changeDirection((struct point){1, 0});
+      snake->changeDirection(point{1, 0});
     }
     if (lastPressed == KEY_SPACE)
     {

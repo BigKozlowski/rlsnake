@@ -1,6 +1,6 @@
 #include "Apple.hpp"
 
-Apple::Apple(struct point position)
+Apple::Apple(point position)
 {
   this->x = position.x;
   this->y = position.y;
@@ -10,9 +10,9 @@ Apple::~Apple()
 {
 }
 
-struct point Apple::getPosition()
+point Apple::getPosition()
 {
-  return (struct point){this->x, this->y};
+  return point{this->x, this->y};
 }
 
 void Apple::remove()
