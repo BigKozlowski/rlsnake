@@ -53,8 +53,10 @@ void Engine::init()
   delete this->apple;
   this->apple = new Apple({-1, -1});
   this->gameRunning = true;
+  this->score = 0;
+  this->applesEaten = 0;
+  this->difficultyLevel = 1;
 }
-
 
 void Engine::update()
 {
@@ -65,7 +67,7 @@ void Engine::update()
     apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
   }
   frameCount++;
-  if (frameCount % 10 == 0)
+  if (frameCount % (16 - this->difficultyLevel) == 0)
   {
     snake->update();
     if (snake->isSelfCollided())
@@ -75,6 +77,13 @@ void Engine::update()
     if (snake->hasToEatApple(apple))
     {
       snake->eat(apple);
+      this->applesEaten++;
+      this->score += this->difficultyLevel;
+      if(this->applesEaten % 3 == 0) {
+        if(this->difficultyLevel < 15) {
+          this->difficultyLevel++;
+        }
+      }
     }
   }
 }
@@ -83,7 +92,7 @@ void Engine::handleKeypress()
 {
   int nowPressed = GetKeyPressed();
   lastPressed = nowPressed ? nowPressed : lastPressed;
-  if (frameCount % 10 == 0)
+  if (frameCount % (16 - this->difficultyLevel) == 0)
   {
     if (lastPressed == (KEY_DOWN))
     {
@@ -117,8 +126,9 @@ void Engine::render()
   {
 
     BeginDrawing();
-    DrawTextureQuad(mudTexture, Vector2{50, 30}, Vector2{0, 0}, Rectangle{0, 0, 800, 480}, WHITE);
     ClearBackground(BLACK);
+    DrawTextureQuad(mudTexture, Vector2{50, 30}, Vector2{0, 0}, Rectangle{0, 0, 800, 480}, WHITE);
+    DrawText(TextFormat("Score: %08i", this->score), 10, 481, 14, WHITE);
     if (isOnScreen(apple->getPosition()))
     {
       apple[0].draw(appleTexture);

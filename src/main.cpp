@@ -1,7 +1,7 @@
 #include "main.hpp"
 
 #define SCREEN_WIDTH (800)
-#define SCREEN_HEIGHT (480)
+#define SCREEN_HEIGHT (496)
 
 #define WINDOW_TITLE "My awesome snake"
 
