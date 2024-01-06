@@ -18,7 +18,7 @@ public:
     Snake(point head, point direction);
     ~Snake();
     void grow(point p);
-    void draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture);
+    void draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture, Texture2D tailTexture);
     void setDirection(point p);
     void update();
     void changeDirection(point p);

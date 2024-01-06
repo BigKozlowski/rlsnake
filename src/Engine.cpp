@@ -16,16 +16,24 @@ Engine::Engine()
   this->apple = new Apple({-1, -1});
   this->gameRunning = true;
 
-  this->appleImage = LoadImage("./assets/apple.png");
-  this->snakeImage = LoadImage("./assets/snake_thin.png");
-  this->mudImage = LoadImage("./assets/mud.png");
-  this->headImage = LoadImage("./assets/snake_head.png");
-  this->angleImage = LoadImage("./assets/snake_angle_thin.png");
-  this->appleTexture = LoadTextureFromImage(this->appleImage);
-  this->snakeBodyTexture = LoadTextureFromImage(this->snakeImage);
+  Image appleImage = LoadImage("./assets/apple.png");
+  Image snakeImage = LoadImage("./assets/snake_thin.png");
+  Image mudImage = LoadImage("./assets/mud.png");
+  Image headImage = LoadImage("./assets/snake_head.png");
+  Image angleImage = LoadImage("./assets/snake_angle_thin.png");
+  Image tailImage = LoadImage("./assets/snake_tail_thin.png");
+  this->appleTexture = LoadTextureFromImage(appleImage);
+  this->snakeBodyTexture = LoadTextureFromImage(snakeImage);
   this->mudTexture = LoadTextureFromImage(mudImage);
   this->snakeHeadTexture = LoadTextureFromImage(headImage);
   this->snakeAngleTexture = LoadTextureFromImage(angleImage);
+  this->snakeTailTexture = LoadTextureFromImage(tailImage);
+  UnloadImage(appleImage);
+  UnloadImage(snakeImage);
+  UnloadImage(mudImage);
+  UnloadImage(headImage);
+  UnloadImage(angleImage);
+  UnloadImage(tailImage);
 }
 
 Engine::~Engine()
@@ -36,11 +44,6 @@ Engine::~Engine()
   UnloadTexture(this->mudTexture);
   UnloadTexture(this->snakeHeadTexture);
   UnloadTexture(this->snakeAngleTexture);
-  UnloadImage(this->appleImage);
-  UnloadImage(snakeImage);
-  UnloadImage(mudImage);
-  UnloadImage(headImage);
-  UnloadImage(angleImage);
 }
 
 void Engine::init()
@@ -120,7 +123,7 @@ void Engine::render()
     {
       apple[0].draw(appleTexture);
     }
-    snake->draw(this->snakeBodyTexture, this->snakeHeadTexture, this->snakeAngleTexture);
+    snake->draw(this->snakeBodyTexture, this->snakeHeadTexture, this->snakeAngleTexture, this->snakeTailTexture);
     EndDrawing();
   }
   break;

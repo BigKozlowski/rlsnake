@@ -24,13 +24,13 @@ void Snake::grow(point p)
     }
 }
 
-void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture)
+void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture, Texture2D tailTexture)
 {
     auto previousPoint = this->body[0];
     for (size_t i = 1; i < this->length; ++i)
     {
         if(i == this->length - 1) {
-            this->drawTail(texture, previousPoint, this->body[i]);
+            this->drawTail(tailTexture, previousPoint, this->body[i]);
         } else {
             const auto nextPoint = this->body[i + 1];
             this->drawBodyPart(texture, angleTexture, previousPoint, this->body[i], nextPoint);
@@ -52,9 +52,32 @@ void Snake::drawBodyPart(Texture2D texture, Texture2D angleTexture, point prev, 
 }
 
 void Snake::drawTail(Texture2D texture, point prev, point curr) {
-    if (curr.x == prev.x)
+    if(curr.x - prev.x > 1) {
+        this->drawTail(texture, (point){curr.x + 1, prev.y}, curr);
+        return;
+    }
+    if(curr.x - prev.x < -1) {
+        this->drawTail(texture, (point){curr.x - 1, prev.y}, curr);
+        return;
+    }
+    if(curr.y - prev.y > 1) {
+        this->drawTail(texture, (point){prev.x, curr.y + 1}, curr);
+        return;
+    }
+    if(curr.y - prev.y < -1) {
+        this->drawTail(texture, (point){prev.x, curr.y - 1}, curr);
+        return;
+    }
+
+    if (curr.y - prev.y < 0)
     {
         DrawTextureEx(texture, Vector2{(float)curr.x * 16, (float)curr.y * 16 + 16}, 270.0, 1.0, WHITE);
+    }
+    else if (curr.y - prev.y > 0) {
+        DrawTextureEx(texture, Vector2{(float)curr.x * 16 + 16, (float)curr.y * 16}, 90.0, 1.0, WHITE);
+    }
+    else if (curr.x - prev.x < 0) {
+        DrawTextureEx(texture, Vector2{(float)curr.x * 16 + 16, (float)curr.y * 16 + 16}, 180.0, 1.0, WHITE);
     }
     else
     {

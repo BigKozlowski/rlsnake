@@ -11,16 +11,12 @@ private:
   Apple *apple;
   int lastPressed;
   void initializeSnake();
-  Image appleImage{};
-  Image snakeImage{};
-  Image mudImage{};
-  Image headImage{};
-  Image angleImage{};
   Texture2D appleTexture{};
   Texture2D snakeBodyTexture{};
   Texture2D mudTexture{};
   Texture2D snakeHeadTexture{};
   Texture2D snakeAngleTexture{};
+  Texture2D snakeTailTexture{};
   /* data */
 public:
   Engine(/* args */);
