@@ -97,14 +97,16 @@ void Engine::render()
     const auto mudTexture = LoadTextureFromImage(mudImage);
     const auto headImage = LoadImage("./src/snake_head.png");
     const auto headTexture = LoadTextureFromImage(headImage);
+    const auto angleImage = LoadImage("./src/snake_angle.png");
+    const auto angleTexture = LoadTextureFromImage(angleImage);
     BeginDrawing();
     DrawTextureQuad(mudTexture, Vector2{50, 30}, Vector2{0, 0}, Rectangle{0, 0, 800, 480}, WHITE);
     ClearBackground(BLACK);
     if (isOnScreen(apple->getPosition()))
     {
-      apple->draw(appleTexture);
+      apple[0].draw(appleTexture);
     }
-    snake->draw(snakeTexture, headTexture);
+    snake->draw(snakeTexture, headTexture, angleTexture);
     EndDrawing();
     UnloadTexture(appleTexture);
     UnloadImage(appleImage);
