@@ -11,4 +11,5 @@ struct point
 #include "utils/screen.hpp"
 #include "Apple.hpp"
 #include "Snake.hpp"
+#include "Level.hpp"
 #include "Engine.hpp"
