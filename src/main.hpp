@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include "raylib.h"
+#include <raylib.h>
 
 struct point
 {

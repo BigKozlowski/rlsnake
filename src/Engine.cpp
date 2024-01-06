@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include <stdlib.h>
+#include <iostream>
 
 void Engine::initializeSnake()
 {
@@ -14,6 +15,33 @@ Engine::Engine()
   this->initializeSnake();
   this->apple = new Apple({-1, -1});
   this->gameRunning = true;
+
+  this->appleImage = LoadImage("./src/apple.png");
+  this->snakeImage = LoadImage("./src/snake.png");
+  this->mudImage = LoadImage("./src/mud.png");
+  this->headImage = LoadImage("./src/snake_head.png");
+  this->angleImage = LoadImage("./src/snake_angle.png");
+  this->appleTexture = LoadTextureFromImage(this->appleImage);
+  std::cout << "construct" << std::endl;
+  this->snakeBodyTexture = LoadTextureFromImage(this->snakeImage);
+  this->mudTexture = LoadTextureFromImage(mudImage);
+  this->snakeHeadTexture = LoadTextureFromImage(headImage);
+  this->snakeAngleTexture = LoadTextureFromImage(angleImage);
+}
+
+Engine::~Engine()
+{
+  delete snake;
+  UnloadTexture(this->appleTexture);
+  UnloadTexture(this->snakeBodyTexture);
+  UnloadTexture(this->mudTexture);
+  UnloadTexture(this->snakeHeadTexture);
+  UnloadTexture(this->snakeAngleTexture);
+  UnloadImage(this->appleImage);
+  // UnloadImage(snakeImage);
+  // UnloadImage(mudImage);
+  // UnloadImage(headImage);
+  // UnloadImage(angleImage);
 }
 
 void Engine::init()
@@ -25,10 +53,6 @@ void Engine::init()
   this->gameRunning = true;
 }
 
-Engine::~Engine()
-{
-  delete snake;
-}
 
 void Engine::update()
 {
@@ -89,16 +113,7 @@ void Engine::render()
   {
   case true:
   {
-    const auto appleImage = LoadImage("./src/apple.png");
-    const auto appleTexture = LoadTextureFromImage(appleImage);
-    const auto snakeImage = LoadImage("./src/snake.png");
-    const auto snakeTexture = LoadTextureFromImage(snakeImage);
-    const auto mudImage = LoadImage("./src/mud.png");
-    const auto mudTexture = LoadTextureFromImage(mudImage);
-    const auto headImage = LoadImage("./src/snake_head.png");
-    const auto headTexture = LoadTextureFromImage(headImage);
-    const auto angleImage = LoadImage("./src/snake_angle.png");
-    const auto angleTexture = LoadTextureFromImage(angleImage);
+
     BeginDrawing();
     DrawTextureQuad(mudTexture, Vector2{50, 30}, Vector2{0, 0}, Rectangle{0, 0, 800, 480}, WHITE);
     ClearBackground(BLACK);
@@ -106,16 +121,8 @@ void Engine::render()
     {
       apple[0].draw(appleTexture);
     }
-    snake->draw(snakeTexture, headTexture, angleTexture);
+    snake->draw(this->snakeBodyTexture, this->snakeHeadTexture, this->snakeAngleTexture);
     EndDrawing();
-    UnloadTexture(appleTexture);
-    UnloadImage(appleImage);
-    UnloadTexture(snakeTexture);
-    UnloadImage(snakeImage);
-    UnloadTexture(mudTexture);
-    UnloadImage(mudImage);
-    UnloadTexture(headTexture);
-    UnloadTexture(headTexture);
   }
   break;
   default:

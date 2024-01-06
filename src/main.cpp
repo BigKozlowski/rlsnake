@@ -7,8 +7,8 @@
 
 int main()
 {
-    Engine *engine = new Engine();
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+    Engine *engine = new Engine();
 
     SetTargetFPS(60);
 
