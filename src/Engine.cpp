@@ -79,7 +79,7 @@ void Engine::update()
       snake->eat(apple);
       this->applesEaten++;
       this->score += this->difficultyLevel;
-      if(this->applesEaten % 3 == 0) {
+      if(this->applesEaten % 10 == 0) {
         if(this->difficultyLevel < 15) {
           this->difficultyLevel++;
         }
