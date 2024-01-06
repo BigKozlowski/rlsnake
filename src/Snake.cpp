@@ -37,7 +37,6 @@ void Snake::draw(Texture2D texture, Texture2D headTexture)
             DrawTexture(texture, this->body[i].x * 16, this->body[i].y * 16, WHITE);
         }
         previousPoint = this->body[i];
-        // DrawRectangle(this->body[i].x * 16, this->body[i].y * 16, 16, 16, GRAY);
     }
 
     if (this->direction.x == 1)
@@ -56,7 +55,6 @@ void Snake::draw(Texture2D texture, Texture2D headTexture)
     {
         DrawTextureEx(headTexture, Vector2{(float)this->body[0].x * 16 + 16, (float)this->body[0].y * 16}, 90.0, 1.0, WHITE);
     }
-    // DrawRectangle(this->body[0].x * 16, this->body[0].y * 16, 16, 16, RED);
 }
 
 void Snake::setDirection(struct point p)
