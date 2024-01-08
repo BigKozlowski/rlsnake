@@ -13,7 +13,7 @@ Engine::Engine()
 {
   this->initializeSnake();
   this->apple = new Apple({-1, -1});
-  this->level = new Level("./assets/maze.lev");
+  this->level = new Level((char *)"./assets/maze.lev");
   this->gameRunning = true;
 
   Image appleImage = LoadImage("./assets/apple.png");

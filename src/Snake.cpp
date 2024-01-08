@@ -27,7 +27,7 @@ void Snake::grow(point p)
 void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture, Texture2D tailTexture)
 {
     auto previousPoint = this->body[0];
-    for (size_t i = 1; i < this->length; ++i)
+    for (int i = 1; i < this->length; ++i)
     {
         if (i == this->length - 1)
         {
@@ -48,7 +48,8 @@ void Snake::drawBodyPart(Texture2D texture, Texture2D angleTexture, point prev, 
 {
     if (prev.x == next.x)
     {
-        DrawTextureEx(texture, Vector2{(float)curr.x * 16, (float)curr.y * 16 + 16}, 270.0, 1.0, WHITE);
+        DrawTextureRotatedInPlace(texture, curr.x, curr.y, 16, 270.0);
+        // DrawTextureEx(texture, Vector2{(float)curr.x * 16, (float)curr.y * 16 + 16}, 270.0, 1.0, WHITE);
     }
     else if (prev.y == next.y)
     {
@@ -64,22 +65,26 @@ void Snake::drawTail(Texture2D texture, point prev, point curr)
 {
     if (curr.x - prev.x > 1)
     {
-        this->drawTail(texture, (point){(int16_t)(curr.x + 1), prev.y}, curr);
+        point p = {(curr.x + 1), prev.y};
+        this->drawTail(texture, p, curr);
         return;
     }
     if (curr.x - prev.x < -1)
     {
-        this->drawTail(texture, (point){(int16_t)(curr.x - 1), prev.y}, curr);
+        point p = {(curr.x - 1), prev.y};
+        this->drawTail(texture, p, curr);
         return;
     }
     if (curr.y - prev.y > 1)
     {
-        this->drawTail(texture, (point){prev.x, (int16_t)(curr.y + 1)}, curr);
+        point p = {prev.x, (curr.y + 1)};
+        this->drawTail(texture, p, curr);
         return;
     }
     if (curr.y - prev.y < -1)
     {
-        this->drawTail(texture, (point){prev.x, (int16_t)(curr.y - 1)}, curr);
+        point p = {prev.x, (curr.y - 1)};
+        this->drawTail(texture, p, curr);
         return;
     }
 
@@ -105,43 +110,51 @@ void Snake::drawSnakeAngle(Texture2D angleTexture, point prev, point curr, point
 {
     if (curr.x - prev.x > 1)
     {
-        this->drawSnakeAngle(angleTexture, (point){(int16_t)(curr.x + 1), prev.y}, curr, next);
+        point p = {(curr.x + 1), prev.y};
+        this->drawSnakeAngle(angleTexture, p, curr, next);
         return;
     }
     if (curr.x - prev.x < -1)
     {
-        this->drawSnakeAngle(angleTexture, (point){(int16_t)(curr.x - 1), prev.y}, curr, next);
+        point p = {(curr.x - 1), prev.y};
+        this->drawSnakeAngle(angleTexture, p, curr, next);
         return;
     }
     if (curr.y - prev.y > 1)
     {
-        this->drawSnakeAngle(angleTexture, (point){prev.x, (int16_t)(curr.y + 1)}, curr, next);
+        point p = {prev.x, (curr.y + 1)};
+        this->drawSnakeAngle(angleTexture, p, curr, next);
         return;
     }
     if (curr.y - prev.y < -1)
     {
-        this->drawSnakeAngle(angleTexture, (point){prev.x, (int16_t)(curr.y - 1)}, curr, next);
+        point p = {prev.x, (curr.y - 1)};
+        this->drawSnakeAngle(angleTexture, p, curr, next);
         return;
     }
 
     if (curr.x - next.x > 1)
     {
-        this->drawSnakeAngle(angleTexture, prev, curr, (point){(int16_t)(curr.x + 1), next.y});
+        point p = {(curr.x + 1), next.y};
+        this->drawSnakeAngle(angleTexture, prev, curr, p);
         return;
     }
     if (curr.x - next.x < -1)
     {
-        this->drawSnakeAngle(angleTexture, prev, curr, (point){(int16_t)(curr.x - 1), next.y});
+        point p = {(curr.x - 1), next.y};
+        this->drawSnakeAngle(angleTexture, prev, curr, p);
         return;
     }
     if (curr.y - next.y > 1)
     {
-        this->drawSnakeAngle(angleTexture, prev, curr, (point){next.x, (int16_t)(curr.y + 1)});
+        point p = {next.x, (curr.y + 1)};
+        this->drawSnakeAngle(angleTexture, prev, curr, p);
         return;
     }
     if (curr.y - next.y < -1)
     {
-        this->drawSnakeAngle(angleTexture, prev, curr, (point){next.x, (int16_t)(curr.y - 1)});
+        point p = {next.x, (curr.y - 1)};
+        this->drawSnakeAngle(angleTexture, prev, curr, p);
         return;
     }
 

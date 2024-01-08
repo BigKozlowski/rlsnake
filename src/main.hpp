@@ -4,8 +4,8 @@
 
 struct point
 {
-  int16_t x;
-  int16_t y;
+  int x;
+  int y;
 };
 
 #include "utils/screen.hpp"
