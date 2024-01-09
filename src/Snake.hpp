@@ -9,6 +9,7 @@ private:
     point *body{};
     point direction;
     uint16_t length;
+    
     void drawSnakeAngle(Texture2D angleTexture, point prev, point curr, point next);
     void drawTail(Texture2D texture, point prev, point curr);
     void drawBodyPart(Texture2D texture, Texture2D angleTexture, point prev, point curr, point next);
@@ -22,6 +23,7 @@ public:
     void setDirection(point p);
     void update();
     void changeDirection(point p);
+    point getDirection();
     point getHead();
     point getTail();
     bool hasToEatApple(Apple *apple);

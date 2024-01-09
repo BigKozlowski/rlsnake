@@ -15,6 +15,9 @@ Engine::Engine()
   this->apple = new Apple({-1, -1});
   this->level = new Level((char *)"./assets/maze.lev");
   this->mode = GAME;
+  this->lastTickTime = GetTime();
+  this->snakeDirection = point{0, 0};
+  this->speedupStart = -1.0;
 
   Image appleImage = LoadImage("./assets/apple.png");
   Image snakeImage = LoadImage("./assets/snake_thin.png");
@@ -63,6 +66,7 @@ void Engine::init()
   this->difficultyLevel = 1;
   this->lastTickTime = GetTime();
   this->snakeDirection = point{0, 0};
+  this->speedupStart = -1.0;
 }
 
 void Engine::tick()
@@ -112,6 +116,31 @@ void Engine::update()
   if (GetTime() - lastTickTime > tickDuration)
   {
     tick();
+
+    bool speedup = snakeDirection.y > 0 && IsKeyDown(KEY_DOWN) ||
+                   snakeDirection.y < 0 && IsKeyDown(KEY_UP) ||
+                   snakeDirection.x < 0 && IsKeyDown(KEY_LEFT) ||
+                   snakeDirection.x > 0 && IsKeyDown(KEY_RIGHT);
+    if (speedup)
+    {
+      if (speedupStart > 0.0) 
+      {
+        if (GetTime() - speedupStart > 0.5)
+        {
+          // If we're holding the same direction for a half a second we want to move faster. For sure!
+          tick();
+        }
+      }
+      else
+      {
+        speedupStart = GetTime();
+      }
+    }
+    else
+    {
+      speedupStart = -1.0;
+    }
+
     lastTickTime = GetTime();
   }
 }
@@ -138,7 +167,7 @@ void Engine::handleKeypress()
     this->snakeDirection = point{1, 0};
     break;
   case KEY_SPACE:
-      this->init();
+    this->init();
     break;
   }
 }

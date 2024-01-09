@@ -24,6 +24,7 @@ private:
   int lastPressed;
   double lastTickTime;
   point snakeDirection;
+  double speedupStart;
   void initializeSnake();
   void tick();
   Texture2D appleTexture{};
