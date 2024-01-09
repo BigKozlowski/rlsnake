@@ -4,9 +4,19 @@
 class Snake;
 class Level;
 
+enum mode
+{
+  GAME,
+  START,
+  GAMEOVER,
+  EDITOR,
+  LEADERBOARD
+};
+
 class Engine
 {
 private:
+  mode mode;
   Level *level;
   Snake *snake;
   uint32_t frameCount;
@@ -31,5 +41,4 @@ public:
   void init();
   void update();
   void render();
-  bool gameRunning;
 };

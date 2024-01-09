@@ -14,7 +14,7 @@ Engine::Engine()
   this->initializeSnake();
   this->apple = new Apple({-1, -1});
   this->level = new Level((char *)"./assets/maze.lev");
-  this->gameRunning = true;
+  this->mode = GAME;
 
   Image appleImage = LoadImage("./assets/apple.png");
   Image snakeImage = LoadImage("./assets/snake_thin.png");
@@ -57,7 +57,7 @@ void Engine::init()
   this->initializeSnake();
   delete this->apple;
   this->apple = new Apple({-1, -1});
-  this->gameRunning = true;
+  this->mode = GAME;
   this->score = 0;
   this->applesEaten = 0;
   this->difficultyLevel = 1;
@@ -70,7 +70,8 @@ void Engine::update()
   {
     delete apple;
     apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
-    while(this->level->walls[this->apple->getPosition().x][this->apple->getPosition().y]){
+    while (this->level->walls[this->apple->getPosition().x][this->apple->getPosition().y])
+    {
       delete apple;
       apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
     }
@@ -81,18 +82,21 @@ void Engine::update()
     snake->update();
     if (snake->isSelfCollided())
     {
-      this->gameRunning = false;
+      this->mode = GAMEOVER;
     }
-    if(this->level->walls[snake->getHead().x][snake->getHead().y]){
-      this->gameRunning = false;
+    if (this->level->walls[snake->getHead().x][snake->getHead().y])
+    {
+      this->mode = GAMEOVER;
     }
     if (snake->hasToEatApple(apple))
     {
       snake->eat(apple);
       this->applesEaten++;
       this->score += this->difficultyLevel;
-      if(this->applesEaten % 10 == 0) {
-        if(this->difficultyLevel < 15) {
+      if (this->applesEaten % 10 == 0)
+      {
+        if (this->difficultyLevel < 15)
+        {
           this->difficultyLevel++;
         }
       }
@@ -132,9 +136,9 @@ void Engine::handleKeypress()
 
 void Engine::render()
 {
-  switch (gameRunning)
+  switch (this->mode)
   {
-  case true:
+  case GAME:
   {
 
     BeginDrawing();
@@ -150,11 +154,15 @@ void Engine::render()
     EndDrawing();
   }
   break;
-  default:
+  case GAMEOVER:
   {
     BeginDrawing();
     ClearBackground(RED);
     EndDrawing();
+  }
+  break;
+  default:
+  {
   }
   break;
   }
