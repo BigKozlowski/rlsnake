@@ -161,6 +161,18 @@ void Engine::render()
     EndDrawing();
   }
   break;
+  case LEADERBOARD:
+  {
+  }
+  break;
+  case EDITOR:
+  {
+  }
+  break;
+  case START:
+  {
+  }
+  break;
   default:
   {
   }
