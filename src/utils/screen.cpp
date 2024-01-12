@@ -22,7 +22,7 @@ void DrawTextureRotatedInPlace(Texture2D texture, int x, int y, int size, float 
   if(rotation == 0.0) {
     DrawTexture(texture, x, y, WHITE);
   } else {
-    const auto rads = d2r(rotation);
+    const double rads = d2r(rotation);
     DrawTextureEx(texture, Vector2{(float)x * size + size * (float)std::cos(rads), (float)y * size - size * (float)std::sin(rads)}, rotation, 1.0, WHITE);
   }
 }

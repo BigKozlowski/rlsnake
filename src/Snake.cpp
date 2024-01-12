@@ -26,7 +26,7 @@ void Snake::grow(point p)
 
 void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTexture, Texture2D tailTexture)
 {
-    auto previousPoint = this->body[0];
+    point previousPoint = this->body[0];
     for (int i = 1; i < this->length; ++i)
     {
         if (i == this->length - 1)
@@ -35,7 +35,7 @@ void Snake::draw(Texture2D texture, Texture2D headTexture, Texture2D angleTextur
         }
         else
         {
-            const auto nextPoint = this->body[i + 1];
+            const point nextPoint = this->body[i + 1];
             this->drawBodyPart(texture, angleTexture, previousPoint, this->body[i], nextPoint);
         }
         previousPoint = this->body[i];
