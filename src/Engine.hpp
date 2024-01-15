@@ -22,7 +22,10 @@ private:
   uint32_t frameCount;
   Apple *apple;
   int lastPressed;
+  double lastTickTime;
+  point snakeDirection;
   void initializeSnake();
+  void tick();
   Texture2D appleTexture{};
   Texture2D snakeBodyTexture{};
   Texture2D mudTexture{};

@@ -61,11 +61,13 @@ void Engine::init()
   this->score = 0;
   this->applesEaten = 0;
   this->difficultyLevel = 1;
+  this->lastTickTime = GetTime();
+  this->snakeDirection = point{0, 0};
 }
 
-void Engine::update()
+void Engine::tick()
 {
-  srand(frameCount);
+  srand((unsigned int)GetTime() * 1000.0);
   if (!isOnScreen(apple->getPosition()))
   {
     delete apple;
@@ -76,9 +78,9 @@ void Engine::update()
       apple = new Apple(point{(int16_t)(rand() % 50), (int16_t)(rand() % 30)});
     }
   }
-  frameCount++;
-  if (frameCount % (16 - this->difficultyLevel) == 0)
+  // if (frameCount % (16 - this->difficultyLevel) == 0)
   {
+    snake->changeDirection(this->snakeDirection);
     snake->update();
     if (snake->isSelfCollided())
     {
@@ -104,33 +106,40 @@ void Engine::update()
   }
 }
 
+void Engine::update()
+{
+  double tickDuration = 0.25 / difficultyLevel;
+  if (GetTime() - lastTickTime > tickDuration)
+  {
+    tick();
+    lastTickTime = GetTime();
+  }
+}
+
 void Engine::handleKeypress()
 {
-  int nowPressed = GetKeyPressed();
-  lastPressed = nowPressed ? nowPressed : lastPressed;
-  if (frameCount % (16 - this->difficultyLevel) == 0)
-  {
-    if (lastPressed == (KEY_DOWN))
-    {
-      snake->changeDirection(point{0, 1});
-    }
-    if (lastPressed == (KEY_UP))
-    {
-      snake->changeDirection(point{0, -1});
-    }
-    if (lastPressed == (KEY_LEFT))
-    {
-      snake->changeDirection(point{-1, 0});
-    }
-    if (lastPressed == (KEY_RIGHT))
-    {
-      snake->changeDirection(point{1, 0});
-    }
-    if (lastPressed == KEY_SPACE)
-    {
+  int lastKey = 0;
+  int key = 0;
+  while ((key = GetKeyPressed())) {
+    lastKey = key;
+  }
+
+  switch (lastKey) {
+  case KEY_DOWN:
+    this->snakeDirection = point{0, 1};
+    break;
+  case KEY_UP:
+    this->snakeDirection = point{0, -1};
+    break;
+  case KEY_LEFT:
+    this->snakeDirection = point{-1, 0};
+    break;
+  case KEY_RIGHT:
+    this->snakeDirection = point{1, 0};
+    break;
+  case KEY_SPACE:
       this->init();
-      lastPressed = 0;
-    }
+    break;
   }
 }
 
