@@ -289,6 +289,11 @@ void Snake::changeDirection(point p)
     }
 }
 
+point Snake::getDirection()
+{
+    return this->direction;
+}
+
 point Snake::getHead()
 {
     return this->body[0];
