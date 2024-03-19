@@ -5,12 +5,12 @@
 2. c++ compiler (tested on clang++ and g++)
 
 ## BUILDING PROCESS:
-1. git clone git@github.com:BigKozlowski/rlsnake.git
-2. cd rlsnake
-3. mkdir build
-4. cd build
-5. cmake ..
-6. cmake --build .
+1. ```git clone git@github.com:BigKozlowski/rlsnake.git```
+2. ```cd rlsnake```
+3. ```mkdir build```
+4. ```cd build```
+5. ```cmake ..```
+6. ```cmake --build .```
 
 ## AFTER BUILD:
 1. raylibsnake executable will be located in <projectroot>/build/Debug/
