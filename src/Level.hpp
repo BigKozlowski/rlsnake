@@ -4,7 +4,7 @@
 class Level
 {
 private:
-    int wallsCount{};
+    // int wallsCount{};
 public:
     bool walls[50][30]{};
     Level(char *filePath);

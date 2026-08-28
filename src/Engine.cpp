@@ -117,10 +117,10 @@ void Engine::update()
   {
     tick();
 
-    bool speedup = snakeDirection.y > 0 && IsKeyDown(KEY_DOWN) ||
-                   snakeDirection.y < 0 && IsKeyDown(KEY_UP) ||
-                   snakeDirection.x < 0 && IsKeyDown(KEY_LEFT) ||
-                   snakeDirection.x > 0 && IsKeyDown(KEY_RIGHT);
+    bool speedup = (snakeDirection.y > 0 && IsKeyDown(KEY_DOWN)) ||
+                   (snakeDirection.y < 0 && IsKeyDown(KEY_UP)) ||
+                   (snakeDirection.x < 0 && IsKeyDown(KEY_LEFT)) ||
+                   (snakeDirection.x > 0 && IsKeyDown(KEY_RIGHT));
     if (speedup)
     {
       if (speedupStart > 0.0) 

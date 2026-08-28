@@ -19,9 +19,9 @@ private:
   Mode mode;
   Level *level;
   Snake *snake;
-  uint32_t frameCount;
+  // uint32_t frameCount;
   Apple *apple;
-  int lastPressed;
+  // int lastPressed;
   double lastTickTime;
   point snakeDirection;
   double speedupStart;
