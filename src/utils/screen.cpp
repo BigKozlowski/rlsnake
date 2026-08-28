@@ -1,8 +1,6 @@
 #include "screen.hpp"
 #include <cmath>
 
-constexpr double PI = 3.14159265358979323846;
-
 bool isOnScreen(point pos)
 {
   return pos.x >= 0 && pos.y >= 0 && pos.x < 50 && pos.y < 30;
