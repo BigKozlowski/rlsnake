@@ -71,7 +71,7 @@ void Engine::init()
 
 void Engine::tick()
 {
-  srand((unsigned int)GetTime() * 1000.0);
+  srand(static_cast<unsigned int>(GetTime() * 1000.0));
   if (!isOnScreen(apple->getPosition()))
   {
     delete apple;

@@ -5,8 +5,8 @@ class Apple
 {
 private:
 public:
-  int16_t x;
-  int16_t y;
+  int x;
+  int y;
   Apple(point position);
   ~Apple();
   void remove();
