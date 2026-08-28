@@ -106,6 +106,7 @@ if(MSVC)
     ${PROJECT_NAME}
     PRIVATE
       /W4
+      /WX
   )
 else()
   target_compile_options(
@@ -114,6 +115,7 @@ else()
       -Wall
       -Wextra
       -Wpedantic
+      -Werror
   )
 endif()
 
