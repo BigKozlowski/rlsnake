@@ -14,7 +14,7 @@ Engine::Engine()
   this->initializeSnake();
   this->apple = new Apple({-1, -1});
   this->level = new Level((char *)"./assets/maze.lev");
-  this->mode = GAME;
+  this->mode = Mode::GAME;
   this->lastTickTime = GetTime();
   this->snakeDirection = point{0, 0};
   this->speedupStart = -1.0;
@@ -60,7 +60,7 @@ void Engine::init()
   this->initializeSnake();
   delete this->apple;
   this->apple = new Apple({-1, -1});
-  this->mode = GAME;
+  this->mode = Mode::GAME;
   this->score = 0;
   this->applesEaten = 0;
   this->difficultyLevel = 1;
@@ -88,11 +88,11 @@ void Engine::tick()
     snake->update();
     if (snake->isSelfCollided())
     {
-      this->mode = GAMEOVER;
+      this->mode = Mode::GAMEOVER;
     }
     if (this->level->walls[snake->getHead().x][snake->getHead().y])
     {
-      this->mode = GAMEOVER;
+      this->mode = Mode::GAMEOVER;
     }
     if (snake->hasToEatApple(apple))
     {
@@ -176,7 +176,7 @@ void Engine::render()
 {
   switch (this->mode)
   {
-  case GAME:
+  case Mode::GAME:
   {
 
     BeginDrawing();
@@ -192,22 +192,22 @@ void Engine::render()
     EndDrawing();
   }
   break;
-  case GAMEOVER:
+  case Mode::GAMEOVER:
   {
     BeginDrawing();
     ClearBackground(RED);
     EndDrawing();
   }
   break;
-  case LEADERBOARD:
+  case Mode::LEADERBOARD:
   {
   }
   break;
-  case EDITOR:
+  case Mode::EDITOR:
   {
   }
   break;
-  case START:
+  case Mode::START:
   {
   }
   break;

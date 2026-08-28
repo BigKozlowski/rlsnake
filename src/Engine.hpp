@@ -4,7 +4,7 @@
 class Snake;
 class Level;
 
-enum mode
+enum class Mode
 {
   GAME,
   START,
@@ -16,7 +16,7 @@ enum mode
 class Engine
 {
 private:
-  mode mode;
+  Mode mode;
   Level *level;
   Snake *snake;
   uint32_t frameCount;
